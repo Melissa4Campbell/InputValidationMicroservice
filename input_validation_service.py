@@ -23,10 +23,30 @@ def check_text(request):
     return {"status": "ok", "valid": True}
 
 
+def check_number(request):
+    try:
+        number = float(request["value"])
+    except ValueError:
+        return {"status": "ok", "valid": False, "reason": "Value is not a number"}
+
+    minimum = request["min"]
+    maximum = request["max"]
+
+    if number < minimum:
+        return {"status": "ok", "valid": False,
+                "reason": "Value is smaller than the minimum of " + str(minimum)}
+    if number > maximum:
+        return {"status": "ok", "valid": False,
+                "reason": "Value is larger than the maximum of " + str(maximum)}
+    return {"status": "ok", "valid": True}
+
+
 def handle_request(request):
     action = request.get("action")
     if action == "check_text":
         return check_text(request)
+    elif action == "check_number":
+        return check_number(request)
     return error_reply("Unknown action: " + str(action))
 
 
