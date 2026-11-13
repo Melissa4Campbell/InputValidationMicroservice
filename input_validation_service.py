@@ -41,12 +41,23 @@ def check_number(request):
     return {"status": "ok", "valid": True}
 
 
+def check_choice(request):
+    value = request["value"]
+    allowed = request['allowed']
+
+    if value not in allowed:
+        return {"status": "ok", "valid": False, "reason": "Value is not in the allowed list"}
+    return {"status": "ok", "valid": True}
+
+
 def handle_request(request):
     action = request.get("action")
     if action == "check_text":
         return check_text(request)
     elif action == "check_number":
         return check_number(request)
+    elif action == "check_choice":
+        return check_choice(request)
     return error_reply("Unknown action: " + str(action))
 
 
