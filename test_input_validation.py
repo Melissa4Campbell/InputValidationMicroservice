@@ -1,4 +1,5 @@
 import json
+import time
 import zmq
 
 PORT = 5563
@@ -66,3 +67,12 @@ check("missing max_length gives an error", reply["status"] == "error" and "max_l
 print("Test 11: unknown action")
 reply = ask({"action": "banana", "value": "Aria"})
 check("unknown action gives an error", reply["status"] == "error")
+
+print("Test 12: speed with 100 allowed choices")
+choices = ["choice " + str(i) for i in range(100)]
+started = time.time()
+reply = ask({"action": "check_choice", "value": "choice 99", "allowed": choices})
+seconds = time.time() - started
+print("The reply took " + str(round(seconds, 3)) + " seconds.")
+check("100 choices answered in 0.5 seconds or less",
+      reply["valid"] == True and seconds <= 0.5)
