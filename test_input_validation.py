@@ -16,7 +16,10 @@ requests = [
     {"action": "check_number", "value": "-5", "min": 0, 'max': 100},
     {"action": "check_number", "value": "abc", "min": 0, 'max': 100},
     {"action": "check_choice", "value": "elf", "allowed": ["elf", "dwarf", "human"]},
-    {"action": "check_choice", "value": "orc", "allowed": ["elf", "dwarf", "human"]}
+    {"action": "check_choice", "value": "orc", "allowed": ["elf", "dwarf", "human"]},
+    {"action": "check_text", "value": "Aria", "min_length": 1},
+    {"action": "banana", "value": "Aria"},
+    {"action": "check_number", "value": "42", "min": 0, "max": 100}
 ]
 
 for request in requests:

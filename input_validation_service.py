@@ -9,7 +9,17 @@ def error_reply(message):
     return {"status": "error", "message": message}
 
 
+def find_missing_field(request, fields):
+    for field in fields:
+        if field not in request:
+            return field
+    return None
+
+
 def check_text(request):
+    missing = find_missing_field(request, ["value", "min_length", "max_length"])
+    if missing:
+        return error_reply("Missing required field: " + missing)
     value = request["value"]
     min_length = request["min_length"]
     max_length = request["max_length"]
@@ -24,6 +34,9 @@ def check_text(request):
 
 
 def check_number(request):
+    missing = find_missing_field(request, ["value", "min", "max"])
+    if missing:
+        return error_reply("Missing required field: " + missing)
     try:
         number = float(request["value"])
     except ValueError:
@@ -42,6 +55,9 @@ def check_number(request):
 
 
 def check_choice(request):
+    missing = find_missing_field(request, ["value", "allowed"])
+    if missing:
+        return error_reply("Missing required field: " + missing)
     value = request["value"]
     allowed = request['allowed']
 
