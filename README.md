@@ -93,7 +93,9 @@ Example reply for the request above:
 ```
 
 ## UML sequence diagram
-This diagram shows 
+This diagram shows how a request and a reply travel between your program and the microservice.
+
+![UML sequence for the Input Validation microservice](sequence_diagram.png)
 
 ## How to test it
 1. Start the microservice and leave it running: `python input_validation_service.py`
